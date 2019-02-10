@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main(){
   runApp(MaterialApp(
@@ -87,6 +88,15 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin{
                   MaterialPageRoute(builder: (context) => SecondRoute()),
                 );
               },
+            ),
+            ListTile(
+              title: Text("Third Page"),
+              onTap: (){
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => ThirdRoute()),
+                );
+              },
             )
           ],
         ),
@@ -154,33 +164,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin{
   }
 }
 
-class SecondRoute extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Second Page'),
-      ),
-      body: Column(
-        children: <Widget>[
-          Image(
-            image: AssetImage('Images/flutter.jpeg'),
-            width: 600.0,
-            height: 350.0,
-          ),
-          RaisedButton(
-            child: Text('Go Back'),
-            color: Colors.blue,
-            onPressed: (){
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 const String _name = "Your Name";
 
 class ChatMessage extends StatelessWidget{
@@ -233,3 +216,103 @@ final ThemeData kDefaultTheme = new ThemeData(
   primarySwatch: Colors.blue,
   accentColor: Colors.blue
 );
+
+class SecondRoute extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Second Page'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Image(
+            image: AssetImage('Images/flutter.jpeg'),
+            width: 600.0,
+            height: 350.0,
+          ),
+          RaisedButton(
+            child: Text('Go Back'),
+            color: Colors.blue,
+            onPressed: (){
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+final dummySnapshot =[
+  {"name": "Filip", "votes": 15},
+  {"name": "Abraham", "votes": 14},
+  {"name": "Richard", "votes": 11},
+  {"name": "Ike", "votes": 10},
+  {"name": "Justin", "votes": 1},
+];
+
+class ThirdRoute extends StatefulWidget{
+  @override
+  _ThirdPageState createState() {
+    return _ThirdPageState();
+  }
+}
+
+class _ThirdPageState extends State<ThirdRoute> {
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Voting'),
+      ),
+      body: _buildBody(context),
+    );
+  }
+  Widget _buildBody(BuildContext context){
+    return _buildList(context, dummySnapshot);
+  }
+  Widget _buildList(BuildContext context, List<Map> snapshot){
+    return ListView(
+      padding: const EdgeInsets.only(top: 20.0),
+      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+    );
+  }
+  Widget _buildListItem(BuildContext context, Map data){
+    final record = Record.fromMap(data);
+
+    return Padding(
+      key: ValueKey(record.name),
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        child: ListTile(
+          title: Text(record.name),
+          trailing: Text(record.votes.toString()),
+          onTap: () => print(record),
+        ),
+      ),
+    );
+  }
+}
+
+class Record{
+  final String name;
+  final int votes;
+  final DocumentReference reference;
+
+  Record.fromMap(Map<String, dynamic> map, {this.reference})
+    :assert(map['name'] != null),
+    assert(map['votes'] != null),
+    name = map['name'],
+    votes = map['votes'];
+
+  Record.fromSnapshot(DocumentSnapshot snapshot)
+    :this.fromMap(snapshot.data, reference:snapshot.reference);
+
+    @override
+    String toString() => "Record<$name:$votes>";
+}
