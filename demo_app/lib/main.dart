@@ -64,13 +64,20 @@ class SecondRoute extends StatelessWidget{
       appBar: AppBar(
         title: Text('Second Page'),
       ),
-      body: Center(
-        child: RaisedButton(
+      body: Column(
+        children: <Widget>[
+          Image(
+            image: AssetImage('Images/flutter.jpeg'),
+            width: 600.0,
+            height: 350.0,
+          ),
+          RaisedButton(
             child: Text('Go Back'),
             onPressed: (){
               Navigator.pop(context);
             },
-        ),
+          ),
+        ],
       ),
     );
   }
