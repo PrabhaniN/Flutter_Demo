@@ -15,24 +15,68 @@ class ChatScreen extends StatefulWidget{
 class ChatScreenState extends State<ChatScreen>{
   final TextEditingController _textEditingController = new TextEditingController();
   @override
-  Widget build(BuildContext){
+  Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
         title: Text("Chat App"),
       ),
       body: _buildTextComposer(),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text("Drawer Header"),
+              decoration: BoxDecoration(
+                color: Colors.blue
+              ),
+            ),
+            ListTile(
+              title: Text("First Page"),
+              onTap: (){
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text("Second Page"),
+              onTap: (){
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => SecondRoute()),
+                );
+              },
+            )
+          ],
+    ),
+  ),
     );
   }
   Widget _buildTextComposer(){
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: TextField(
-        controller: _textEditingController,
-        onSubmitted: _handleSubmitted,
-        decoration: InputDecoration.collapsed(
-          hintText: "Send Message"
+    return IconTheme(
+      data: new IconThemeData(color: Theme.of(context).accentColor),
+      child: new Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          children: <Widget>[
+            Flexible(
+              child: TextField(
+                controller: _textEditingController,
+                onSubmitted: _handleSubmitted,
+                decoration: InputDecoration.collapsed(
+                  hintText: "Send Message"
+                ),
+              ),
+            ),
+            new Container(
+              margin: new EdgeInsets.symmetric(horizontal: 4.0),
+              child: new IconButton(
+                icon: new Icon(Icons.send),
+                onPressed: () => _handleSubmitted(_textEditingController.text),
+              ),
+            ),
+          ],
         ),
-      ),
+      )
     );
   }
   void _handleSubmitted(String text){
@@ -55,60 +99,32 @@ class ChatScreenState extends State<ChatScreen>{
             // }
         // ),
       // ),
-      // drawer: Drawer(
-        // child: ListView(
-          // padding: EdgeInsets.zero,
-          // children: <Widget>[
-            // DrawerHeader(
-              // child: Text("Drawer Header"),
-              // decoration: BoxDecoration(
-                // color: Colors.blue
-              // ),
-            // ),
-            // ListTile(
-              // title: Text("First Page"),
-              // onTap: (){
-                // Navigator.pop(context);
-              // },
-            // ),
-            // ListTile(
-              // title: Text("Second Page"),
-              // onTap: (){
-                // Navigator.push(
-                  // context, 
-                  // MaterialPageRoute(builder: (context) => SecondRoute()),
-                // );
-              // },
-            // )
-          // ],
-        // ),
-      // ),
     // );
   // }
 // }
 
-// class SecondRoute extends StatelessWidget{
-  // @override
-  // Widget build(BuildContext context) {
-    // return Scaffold(
-      // appBar: AppBar(
-        // title: Text('Second Page'),
-      // ),
-      // body: Column(
-        // children: <Widget>[
-          // Image(
-            // image: AssetImage('Images/flutter.jpeg'),
-            // width: 600.0,
-            // height: 350.0,
-          // ),
-          // RaisedButton(
-            // child: Text('Go Back'),
-            // onPressed: (){
-              // Navigator.pop(context);
-            // },
-          // ),
-        // ],
-      // ),
-    // );
-  // }
-// }
+class SecondRoute extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Second Page'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Image(
+            image: AssetImage('Images/flutter.jpeg'),
+            width: 600.0,
+            height: 350.0,
+          ),
+          RaisedButton(
+            child: Text('Go Back'),
+            onPressed: (){
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
