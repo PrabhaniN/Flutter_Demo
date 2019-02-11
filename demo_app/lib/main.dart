@@ -76,7 +76,8 @@ class _LoginPageState extends State<LoginPage>{
                     // Navigator.pop(context);
                     Navigator.push(
                       context, 
-                      MaterialPageRoute(builder: (context) => ChatScreen()));
+                      MaterialPageRoute(builder: (context) => HomePage())
+                    );
                   },
                 ),
               ],
@@ -149,6 +150,35 @@ class HomePage extends StatelessWidget{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu,
+            semanticLabel: 'menu',
+          ),
+          onPressed: (){
+            print('Menu Button');
+          },
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              semanticLabel: 'search',
+            ),
+            onPressed: (){
+              print('search button');
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.tune,
+              semanticLabel: 'filter'
+            ),
+            onPressed: (){
+              print('Filter Button');
+            },
+          )
+        ],
         title: Text('Flutter'),
       ),
       body: Center(
