@@ -13,53 +13,74 @@ void main(){
   ));
 }
 
-class LoginPage extends StatelessWidget{
+class LoginPage extends StatefulWidget{
+  @override
+  _LoginPageState createState() => _LoginPageState(); 
+}
+
+class _LoginPageState extends State<LoginPage>{
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Flutter'),
       ),
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
           children: <Widget>[
-          SizedBox(height: 80.0),
-          Column(
-            children: <Widget>[
-              Image(
-                image: AssetImage('Images/flutter.jpeg'),
-                width: 300.0,
-                height: 160.0,
+            SizedBox(height: 80.0),
+            Column(
+              children: <Widget>[
+                Image(
+                  image: AssetImage('Images/flutter.jpeg'),
+                  width: 300.0,
+                  height: 160.0,
+                ),
+                SizedBox(height: 16.0),
+                Text('Flutter'),
+              ]
+            ),
+            SizedBox(height: 120.0),
+            TextField(
+              controller: _usernameController,
+              decoration: InputDecoration(
+                filled: true,
+                labelText: 'User Name',
               ),
-              SizedBox(height: 16.0),
-              Text('Flutter'),
-            ]
-          ),
-          SizedBox(height: 120.0),
-          TextField(
-            decoration: InputDecoration(
-              filled: true,
-              labelText: 'User Name',
             ),
-          ),
-          SizedBox(height: 12.0),
-          TextField(
-            decoration: InputDecoration(
-              filled: true,
-              labelText: 'Password',
+            SizedBox(height: 12.0),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(
+                filled: true,
+                labelText: 'Password',
+              ),
+              obscureText: true,
             ),
-            obscureText: true,
-          ),
-          // RaisedButton(
-            // child: Text('Login'),
-            // color: Colors.blue,
-            // onPressed: (){
-              // Navigator.push(
-                // context, 
-                // MaterialPageRoute(builder: (context) => ChatScreen()));
-            // },
-          // ),
+            ButtonBar(
+              children: <Widget>[
+                FlatButton(
+                  child: Text('CANCEL'),
+                  onPressed: (){
+                    _usernameController.clear();
+                    _passwordController.clear();
+                  },
+                ), 
+                RaisedButton(
+                  child: Text('LOGIN'),
+                  // color: Colors.blue,
+                  onPressed: (){
+                    // Navigator.pop(context);
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (context) => ChatScreen()));
+                  },
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -75,9 +96,18 @@ class LoginPage extends StatelessWidget{
               ),
             ),
             ListTile(
-              title: Text("Home"),
+              title: Text("Login"),
               onTap: (){
                 Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text("Home"),
+              onTap: (){
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
               },
             ),
             ListTile(
@@ -109,6 +139,20 @@ class LoginPage extends StatelessWidget{
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter'),
+      ),
+      body: Center(
+        child: Text('You did it!'),
       ),
     );
   }
