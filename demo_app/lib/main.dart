@@ -9,8 +9,84 @@ void main(){
     theme: defaultTargetPlatform == TargetPlatform.android
       ?kDefaultTheme
       :kIOSTheme,
-    home: ChatScreen(),
+    home: LoginPage(),
   ));
+}
+
+class LoginPage extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Image(
+            image: AssetImage('Images/flutter.jpeg'),
+            width: 600.0,
+            height: 350.0,
+          ),
+          RaisedButton(
+            child: Text('Login'),
+            color: Colors.blue,
+            onPressed: (){
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) => ChatScreen()));
+            },
+          ),
+        ],
+      ),
+
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text("Chat App"),
+              decoration: BoxDecoration(
+                color: Colors.blue
+              ),
+            ),
+            ListTile(
+              title: Text("Home"),
+              onTap: (){
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text("Chat Page"),
+              onTap: (){
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => ChatScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text("Second Page"),
+              onTap: (){
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => SecondRoute()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text("Third Page"),
+              onTap: (){
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => ThirdRoute()),
+                );
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class ChatScreen extends StatefulWidget{
@@ -62,44 +138,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin{
             ),
           )
           : null
-      ),
-
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text("Chat App"),
-              decoration: BoxDecoration(
-                color: Colors.blue
-              ),
-            ),
-            ListTile(
-              title: Text("First Page"),
-              onTap: (){
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text("Second Page"),
-              onTap: (){
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => SecondRoute()),
-                );
-              },
-            ),
-            ListTile(
-              title: Text("Third Page"),
-              onTap: (){
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => ThirdRoute()),
-                );
-              },
-            )
-          ],
-        ),
       ),
     );
   }
