@@ -20,23 +20,48 @@ class LoginPage extends StatelessWidget{
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Column(
-        children: <Widget>[
-          Image(
-            image: AssetImage('Images/flutter.jpeg'),
-            width: 600.0,
-            height: 350.0,
+      body: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          children: <Widget>[
+          SizedBox(height: 80.0),
+          Column(
+            children: <Widget>[
+              Image(
+                image: AssetImage('Images/flutter.jpeg'),
+                width: 300.0,
+                height: 160.0,
+              ),
+              SizedBox(height: 16.0),
+              Text('Flutter'),
+            ]
           ),
-          RaisedButton(
-            child: Text('Login'),
-            color: Colors.blue,
-            onPressed: (){
-              Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (context) => ChatScreen()));
-            },
+          SizedBox(height: 120.0),
+          TextField(
+            decoration: InputDecoration(
+              filled: true,
+              labelText: 'User Name',
+            ),
           ),
-        ],
+          SizedBox(height: 12.0),
+          TextField(
+            decoration: InputDecoration(
+              filled: true,
+              labelText: 'Password',
+            ),
+            obscureText: true,
+          ),
+          // RaisedButton(
+            // child: Text('Login'),
+            // color: Colors.blue,
+            // onPressed: (){
+              // Navigator.push(
+                // context, 
+                // MaterialPageRoute(builder: (context) => ChatScreen()));
+            // },
+          // ),
+          ],
+        ),
       ),
 
       drawer: Drawer(
